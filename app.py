@@ -15,11 +15,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 app.secret_key='Varun'
 api = Api(app)
 
-#this is used to run the script before the request so that we can create the tables all by ourself
-@app.before_first_request
-def create_tables():
-    db.create_all()
-
 jwt = JWT(app,authenticate,identity) # /auth
 
 api.add_resource(Store,'/store/<string:name>')
