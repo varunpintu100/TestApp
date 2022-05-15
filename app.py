@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_jwt import JWT
 from flask_restful import Api
@@ -10,7 +12,7 @@ from security import authenticate, identity
 
 app = Flask(__name__) #this is used to invoke the flask app
 #this piece of code is very important
-app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///data.db' #this is used to create the coloumn and also connect to the database
+app.config['SQLALCHEMY_DATABASE_URI']=os.environ.get('DATABASE_URL','sqlite:///data.db') #this is used to create the coloumn and also connect to the database
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 app.secret_key='Varun'
 api = Api(app)
