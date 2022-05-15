@@ -12,7 +12,10 @@ from security import authenticate, identity
 
 app = Flask(__name__) #this is used to invoke the flask app
 #this piece of code is very important
-app.config['SQLALCHEMY_DATABASE_URI']=os.environ.get('DATABASE_URL','sqlite:///data.db') #this is used to create the coloumn and also connect to the database
+uri = os.environ.get('DATABASE_URL','sqlite:///data.db')
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+app.config['SQLALCHEMY_DATABASE_URI']=uri #this is used to create the coloumn and also connect to the database
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 app.secret_key='Varun'
 api = Api(app)
